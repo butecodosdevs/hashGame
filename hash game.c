@@ -49,30 +49,167 @@ int validationForPosition(Game *game, int optionLine, int optionColumn, char vez
     }
     return 0;
 }
-int verificationGame(Game *game, int count, int optionLine, int optionColumn, char vez)
+int HorizontalVerificationGame(Game *game, int optionLine, int optionColumn, char vez)
 {
-    printf("\nChecando Game\n");
-      
-    if (count == 2)
+    int countLoop = 1;
+    int optionColumnLoop = optionColumn;
+    while (1)
+    {
+        optionColumnLoop++;
+        char vezLoop = game->Table[optionLine][optionColumnLoop];
+
+        if (vezLoop == vez)
+        {
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    optionColumnLoop = optionColumn;
+    while (1)
+    {
+
+        optionColumnLoop--;
+        char vezLoop = game->Table[optionLine][optionColumnLoop];
+
+        if (vezLoop == vez)
+        {
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (countLoop >= 3)
+    {
+
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+int VerticalVerificationGame(Game *game, int optionLine, int optionColumn, char vez)
+{
+    int countLoop = 1;
+    //3
+    int optionLineLoop = optionLine;
+    while (1)
+    {
+        optionLineLoop++;
+        char vezLoopVertical = (game->Table[optionLineLoop][optionColumn]);
+       //vezLoopVertical == X
+        if (vezLoopVertical == vez)
+        {
+
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    optionLineLoop = optionLine;
+    while (1)
+    {
+        optionLineLoop--;
+        char vezLoopVertical = (game->Table[optionLineLoop][optionColumn]);
+
+        if (vezLoopVertical == vez)
+        {
+
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (countLoop >= 3)
     {
         return 1;
     }
     else
     {
-        //Adicionar recursividade para checagem se deu velha ou se houve vitoria de algum player
-        if (game->Table[optionLine][optionColumn] == vez)
-            verificationGame(&game, count + 1, optionLine, optionColumn + 1, vez);
+        return 0;
     }
+}
+
+int DiagonalVerificationGame(Game *game, int optionLine, int optionColumn, char vez)
+{
+    int countLoop = 1;
+    int optionLineLoop = optionLine;
+    int optionColumnLoop = optionColumn;
+    while (1)
+    {
+        optionLineLoop++;
+        optionColumnLoop++;
+        char vezLoopVertical = (game->Table[optionLineLoop][optionColumnLoop]);
+
+        if (vezLoopVertical == vez)
+        {
+
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    optionLineLoop = optionLine;
+    optionColumnLoop = optionColumn;
+    while (1)
+    {
+        optionLineLoop--;
+        optionColumnLoop--;
+        char vezLoopVertical = (game->Table[optionLineLoop][optionColumnLoop]);
+
+        if (vezLoopVertical == vez)
+        {
+
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (countLoop >= 3)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+int verificationGame(Game *game, int optionLine, int optionColumn, char vez)
+{
+
+    int resultHorizontal = 0, resultVertical = 0, resultDiagonal = 0;
+    resultHorizontal = HorizontalVerificationGame(game, optionLine, optionColumn, vez);
+    resultVertical = VerticalVerificationGame(game, optionLine, optionColumn, vez);
+    resultDiagonal = DiagonalVerificationGame(game, optionLine, optionColumn, vez);
+
+    if (resultHorizontal || resultVertical || resultDiagonal)
+        return 1;
+    else
+        return 0;
 }
 int insertTable(Game *game, int optionLine, int optionColumn, char vez, int round)
 {
-    int count = 1;
+
     game->Table[opcaoLinha][opcaoColuna] = vez;
     if (round > 4)
     {
-        int result = verificationGame(game, count, optionLine, optionColumn, vez);
-         return result;
-
+        int result = verificationGame(game, optionLine, optionColumn, vez);
+        return result;
     }
 }
 void roundGame()
@@ -100,13 +237,14 @@ int main()
 
     while (1)
     {
-       roundGame();
+        roundGame();
         if (validationForPosition(&game, opcaoLinha, opcaoColuna, vez))
         {
             continue;
         }
-        int result  = insertTable(&game, opcaoLinha, opcaoColuna, vez, round);
-        if(result == 1){
+        int result = insertTable(&game, opcaoLinha, opcaoColuna, vez, round);
+        if (result == 1)
+        {
             renderTable(&game);
             printf("\nO jogador %c ganhou!", vez);
             break;
