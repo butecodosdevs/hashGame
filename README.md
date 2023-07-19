@@ -1,7 +1,7 @@
 ### HASH GAME👋
 
 
-# - 🌱 O objetivo do jogo é alinhar três símbolos idênticos em uma linha horizontal, vertical ou diagonalmente, antes do oponente, ou encher todo o tabuleiro sem que haja um vencedor, resultando em empate...
+#### - 🌱 O objetivo do jogo é alinhar três símbolos idênticos em uma linha horizontal, vertical ou diagonalmente, antes do oponente, ou encher todo o tabuleiro sem que haja um vencedor, resultando em empate...
 
 
 O jogo é jogado em um tabuleiro 3x3.
