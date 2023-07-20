@@ -34,7 +34,6 @@ void renderTable(Game *game)
         j = 0;
     }
 }
-
 int validationForPosition(Game *game, int optionLine, int optionColumn, char vez)
 {
     if (optionLine > 2 || optionColumn > 2)
@@ -51,13 +50,13 @@ int validationForPosition(Game *game, int optionLine, int optionColumn, char vez
 }
 int HorizontalVerificationGame(Game *game, int optionLine, int optionColumn, char vez)
 {
+    // 1       //2       VEZ =  O
     int countLoop = 1;
     int optionColumnLoop = optionColumn;
     while (1)
     {
         optionColumnLoop++;
         char vezLoop = game->Table[optionLine][optionColumnLoop];
-
         if (vezLoop == vez)
         {
             countLoop++;
@@ -70,7 +69,6 @@ int HorizontalVerificationGame(Game *game, int optionLine, int optionColumn, cha
     optionColumnLoop = optionColumn;
     while (1)
     {
-
         optionColumnLoop--;
         char vezLoop = game->Table[optionLine][optionColumnLoop];
 
@@ -96,13 +94,14 @@ int HorizontalVerificationGame(Game *game, int optionLine, int optionColumn, cha
 int VerticalVerificationGame(Game *game, int optionLine, int optionColumn, char vez)
 {
     int countLoop = 1;
-    //3
+    // 3
     int optionLineLoop = optionLine;
     while (1)
     {
         optionLineLoop++;
+
         char vezLoopVertical = (game->Table[optionLineLoop][optionColumn]);
-       //vezLoopVertical == X
+        // vezLoopVertical == X
         if (vezLoopVertical == vez)
         {
 
@@ -139,9 +138,8 @@ int VerticalVerificationGame(Game *game, int optionLine, int optionColumn, char 
         return 0;
     }
 }
-
 int DiagonalVerificationGame(Game *game, int optionLine, int optionColumn, char vez)
-{
+{ 
     int countLoop = 1;
     int optionLineLoop = optionLine;
     int optionColumnLoop = optionColumn;
@@ -179,7 +177,42 @@ int DiagonalVerificationGame(Game *game, int optionLine, int optionColumn, char 
             break;
         }
     }
+    optionLineLoop = optionLine;
+    optionColumnLoop = optionColumn;
+    while (1)
+    {
+        optionLineLoop--;
+        optionColumnLoop++;
+        char vezLoopVertical = (game->Table[optionLineLoop][optionColumnLoop]);
 
+        if (vezLoopVertical == vez)
+        {
+
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    optionLineLoop = optionLine;
+    optionColumnLoop = optionColumn;
+    while (1)
+    {
+        optionLineLoop++;
+        optionColumnLoop--;
+        char vezLoopVertical = (game->Table[optionLineLoop][optionColumnLoop]);
+
+        if (vezLoopVertical == vez)
+        {
+
+            countLoop++;
+        }
+        else
+        {
+            break;
+        }
+    }
     if (countLoop >= 3)
     {
         return 1;
